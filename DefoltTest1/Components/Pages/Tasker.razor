@@ -1,0 +1,78 @@
+@page "/tasker"
+@using Newtonsoft.Json
+@rendermode InteractiveServer
+<h3>Tasker</h3>
+
+<p>This component menagerie you task.</p>
+
+<input type="text" @bind="_userTaskTextInput.Text"/>
+<button @onclick="AddUserTasks">Добавить задачу</button>
+<button @onclick="SaveFile">Сохранить все</button>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>id заметки</th>
+        <th>выполнена ли?</th>
+        <th>текст:</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in _newUserTasks)
+    {
+        <tr>
+            <td>item.Id</td>
+            <td><input type="checkbox" @bind="item.Completed">  @(item.Completed ? "выполнена" : "не выполнена")</td>
+            <td>@item.Text</td>
+            <td><button @onclick="() => DeleteUserTasks(item)">Удалить</button></td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code
+{
+    IList<UserTask> _newUserTasks = new List<UserTask>();
+    private UserTask _userTaskTextInput = new();
+    const string PathAllUserTasks = "AllUserTasks.json";
+
+    protected override void OnInitialized()
+    {
+        OpenFile();//перезаписывание метода сохранения 
+    }
+
+    private void OpenFile()
+    {
+        if (File.Exists(PathAllUserTasks))
+        {
+            var json = File.ReadAllText(PathAllUserTasks);
+            _newUserTasks = JsonConvert.DeserializeObject<IList<UserTask>>(json)!;
+        }
+        else
+        {
+            SaveFile();
+        }
+    }//вспомогательный метод сохранения заметки в виде json
+
+    private void SaveFile()
+    {
+        var json = JsonConvert.SerializeObject(_newUserTasks);
+        File.WriteAllText(PathAllUserTasks, json);
+    }//вспомогательный метод сохранения заметки в виде json
+
+
+    private void AddUserTasks()
+    {
+        _newUserTasks.Add(_userTaskTextInput);
+        _userTaskTextInput = new UserTask();
+        SaveFile();
+    }
+
+    private void DeleteUserTasks(UserTask task)
+    {
+        _newUserTasks.Remove(task);
+        SaveFile();
+    }
+}
