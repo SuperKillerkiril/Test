@@ -40,7 +40,7 @@
 
     protected override void OnInitialized()
     {
-        OpenFile();//перезаписывание метода сохранения 
+        OpenFile();//перезаписывание метода открытия(необходимо для работы сохранения)
     }
 
     private void OpenFile()
@@ -54,7 +54,7 @@
         {
             SaveFile();
         }
-    }//вспомогательный метод сохранения заметки в виде json
+    }//вспомогательный метод открытия заметки в виде json
 
     private void SaveFile()
     {
