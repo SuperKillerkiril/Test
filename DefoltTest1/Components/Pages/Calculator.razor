@@ -1,0 +1,108 @@
+@page "/calcul"
+@rendermode InteractiveServer
+<td><h1>@InputAll</h1></td>
+<td><button @onclick="ClearAll">clear</button></td>
+<table class="calc">
+    <tbody>
+    <tr>
+        <th><button @onclick="Add1">1</button></th>
+        <th><button @onclick="Add2">2</button></th>
+        <th><button @onclick="Add3">3</button></th>
+        <th><button @onclick="Adddel">:</button></th>
+    </tr>
+    <tr>
+        <th><button @onclick="Add4">4</button></th>
+        <th><button @onclick="Add5">5</button></th>
+        <th><button @onclick="Add6">6</button></th>
+        <th><button @onclick="AddMinus">-</button></th>
+    </tr>
+    <tr>
+        <th><button @onclick="Add7">7</button></th>
+        <th><button @onclick="Add8">8</button></th>
+        <th><button @onclick="Add9">9</button></th>
+        <th><button @onclick="Addumnozh">x</button></th>
+    </tr>
+    <tr>
+        <th><button @onclick="AddPlus">+</button></th>
+        <th><button @onclick="Add0">0</button></th>
+        <th><button @onclick="AddDot">мяу</button></th>
+        <th><button @onclick="Ravno">=</button></th>
+    </tr>
+    </tbody>
+</table>
+
+@code {
+    public string InputAll { get; set; } 
+    public string Input1 { get; set; }
+    public string Input2 { get; set; }
+    public string[] InputSup { get; set; }
+
+   
+
+    public void Add1()
+    { InputAll = string.Concat(InputAll, "1"); }
+    public void Add2()
+    { InputAll = string.Concat(InputAll, "2"); }
+    public void Add3()
+    { InputAll = string.Concat(InputAll, "3"); }
+    public void Add4()
+    { InputAll = string.Concat(InputAll, "4"); }
+    public void Add5()
+    { InputAll = string.Concat(InputAll, "5"); }
+    public void Add6()
+    { InputAll = string.Concat(InputAll, "6"); }
+    public void Add7()
+    { InputAll = string.Concat(InputAll, "7"); }
+    public void Add8()
+    { InputAll = string.Concat(InputAll, "8"); }
+    public void Add9()
+    { InputAll = string.Concat(InputAll, "9"); }
+    public void Add0()
+    { InputAll = string.Concat(InputAll, "0"); }
+    public void AddPlus()
+    { InputAll = string.Concat(InputAll, "+");} 
+    public void AddMinus()
+    { InputAll = string.Concat(InputAll, "-"); }
+    public void Adddel()
+    { InputAll = string.Concat(InputAll, ":"); }
+    public void Addumnozh()
+    { InputAll = string.Concat(InputAll, "x"); }
+    public void AddDot()
+    { InputAll = string.Concat(InputAll, "meow"); }
+
+   
+    public void Ravno()
+    {
+        if (InputAll.Contains("+"))
+        {
+            InputSup = InputAll.Split("+");
+            Input1 = InputSup[0];
+            Input2 = InputSup[1];
+            InputAll = Convert.ToString(Convert.ToInt64(Input1) + Convert.ToInt64(Input2));
+        }
+        if (InputAll.Contains("-"))
+        {
+            InputSup = InputAll.Split("-");
+            Input1 = InputSup[0];
+            Input2 = InputSup[1];
+            InputAll = Convert.ToString(Convert.ToInt64(Input1) - Convert.ToInt64(Input2));
+        }
+        if (InputAll.Contains(":"))
+        {
+            InputSup = InputAll.Split(":");
+            Input1 = InputSup[0];
+            Input2 = InputSup[1];
+            InputAll = Convert.ToString(Convert.ToInt64(Input1) % Convert.ToInt64(Input2));
+        }
+        if (InputAll.Contains("x"))
+        {
+            InputSup = InputAll.Split("x");
+            Input1 = InputSup[0];
+            Input2 = InputSup[1];
+            InputAll = Convert.ToString(Convert.ToInt64(Input1) * Convert.ToInt64(Input2));
+        }
+    
+    }
+    public void ClearAll()
+    { InputAll = ""; }
+}

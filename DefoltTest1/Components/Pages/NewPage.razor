@@ -1,0 +1,25 @@
+@page "/jdjddjdjdj"
+@rendermode InteractiveServer
+<div class="btn-success">
+    <input @onclick="PidorCheck" type="checkbox"/> <a>Ты бля гей бля?</a>
+</div>
+@if (IfYouPidor == true)
+{
+    <img src="LocalImage/ashdfasdjkfd.jpg" alt=""/>
+}
+else
+{
+    <a>Ну ну рискни здоровьем</a>
+}
+   
+
+
+@code {
+    public bool IfYouPidor { get; set; }
+
+
+    void PidorCheck()
+    {
+        IfYouPidor = true;
+    }
+}
